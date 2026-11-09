@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy New Year ❤️✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Poppins:wght@300;500&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#12041f;--bg2:#2a0a3d;--gold:#ffd166;--pink:#ff4d8d;--text:#fff4e0;--muted:#cdb9e6;--card:rgba(255,255,255,.07)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:'Poppins','Noto Sans Gujarati',system-ui,sans-serif;color:var(--text);background:radial-gradient(ellipse at 50% 0%,var(--bg2),var(--bg1) 70%) fixed;overflow-x:hidden;text-align:center}
+body.lock{overflow:hidden;height:100%}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#snd{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:80;width:44px;height:44px;padding:0;margin:0;border-radius:50%;font-size:1.2rem;background:rgba(0,0,0,.45);color:var(--text);border:1px solid rgba(255,209,102,.5);box-shadow:none}
+#gate{position:fixed;inset:0;z-index:50;display:flex;cursor:pointer}
+#gate.gone{display:none}
+.door{width:50%;height:100%;position:relative;transition:transform 1.8s cubic-bezier(.7,0,.2,1);background:repeating-linear-gradient(90deg,rgba(255,209,102,.07) 0 2px,transparent 2px 38px),linear-gradient(160deg,#3a0f55,#14051f);box-shadow:inset 0 0 60px rgba(0,0,0,.6)}
+.door.l{border-right:3px solid var(--gold)}.door.r{border-left:3px solid var(--gold)}
+.door::after{content:"";position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+.door.l::after{right:14px}.door.r::after{left:14px}
+#gate.open .l{transform:translateX(-101%)}#gate.open .r{transform:translateX(101%)}
+#gtitle{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;pointer-events:none;transition:opacity .8s,transform 1.2s}
+#gate.open #gtitle{opacity:0;transform:scale(1.4)}
+#gtitle h1{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(3rem,16vw,6rem);line-height:1;margin:0;background:linear-gradient(90deg,var(--gold),var(--pink),var(--gold));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 3s linear infinite,pop 1.4s cubic-bezier(.2,1.4,.4,1) both;filter:drop-shadow(0 0 22px rgba(255,150,100,.6))}
+#gtitle p{margin:18px 0 0;font-size:1.6rem;animation:pulse 1.6s ease-in-out infinite}
+#gtitle small{margin-top:34px;color:var(--muted);letter-spacing:.3em;font-size:.7rem;text-transform:uppercase;animation:pulse 2s ease-in-out infinite}
+@keyframes shine{to{background-position:200% 0}}
+@keyframes pop{from{opacity:0;transform:scale(.4) translateY(30px)}}
+@keyframes pulse{50%{opacity:.45}}
+main{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:calc(40px + env(safe-area-inset-top,0px)) 20px calc(60px + env(safe-area-inset-bottom,0px));opacity:0;transform:translateY(24px);transition:opacity 1.4s .9s,transform 1.4s .9s}
+body.show main{opacity:1;transform:none}
+.tag{letter-spacing:.2em;font-size:.8rem;color:var(--muted)}
+h2{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(2.4rem,12vw,3.8rem);margin:10px 0 18px;background:linear-gradient(90deg,var(--gold),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:var(--card);border:1px solid rgba(255,209,102,.25);border-radius:24px;padding:24px 20px;margin:18px 0;backdrop-filter:blur(8px);text-align:left}
+.card p{margin:0 0 16px;line-height:1.75;font-size:1.4rem;font-family:'Caveat','Farsan','Noto Sans Gujarati',cursive}
+.card p.first{font-size:1.9rem;text-align:center;color:var(--gold);font-weight:500}
+.card p.last{text-align:center;font-size:1.7rem;margin:0;color:var(--gold)}
+.line{opacity:0;transform:translateY(12px);transition:opacity .9s,transform .9s}
+.line.in{opacity:1;transform:none}
+.gift{margin:90px 0 8px}
+.gift small{display:block;color:var(--muted);margin-top:14px;font-weight:300;font-family:'Noto Sans Gujarati',sans-serif}
+#box{position:relative;width:130px;height:130px;margin:0 auto;cursor:pointer;animation:bob 2s ease-in-out infinite}
+#box.opened{animation:none}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-3deg)}}
+.base{position:absolute;bottom:0;left:8px;right:8px;height:80px;border-radius:6px;background:linear-gradient(135deg,var(--pink),#c2185b);box-shadow:0 10px 30px rgba(255,77,141,.4)}
+.base::before{content:"";position:absolute;left:50%;margin-left:-9px;width:18px;top:0;bottom:0;background:var(--gold)}
+.lid{position:absolute;top:18px;left:0;right:0;height:38px;border-radius:6px;background:linear-gradient(135deg,#ff6fa5,#d81b60);transition:transform .8s cubic-bezier(.3,1.6,.5,1);transform-origin:left bottom;z-index:2}
+.lid::before{content:"";position:absolute;left:50%;margin-left:-9px;width:18px;top:0;bottom:0;background:var(--gold)}
+.lid::after{content:"🎀";position:absolute;left:50%;top:-30px;transform:translateX(-50%);font-size:2.2rem}
+#box.opened .lid{transform:translate(-30px,-90px) rotate(-35deg)}
+.kk{position:absolute;left:50%;top:34px;width:34px;height:34px;margin-left:-17px;opacity:0;pointer-events:none;z-index:1}
+.kk u{display:block;width:100%;height:100%}
+.kk i{display:block;width:100%;height:100%;border-radius:5px;transform:rotate(45deg);position:relative;overflow:hidden;background:linear-gradient(135deg,#fff6df,#f1d08e 60%,#e4b869);box-shadow:0 4px 12px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.5)}
+.kk i::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.85) 50%,transparent 70%);background-size:200% 100%;animation:sheen 2.4s linear infinite}
+@keyframes sheen{from{background-position:200% 0}to{background-position:-200% 0}}
+#box.opened .kk{animation:fly 1.7s var(--d) cubic-bezier(.25,.9,.35,1) forwards}
+#box.opened .kk u{animation:bob2 2.4s 2s ease-in-out infinite}
+@keyframes fly{0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0)}15%{opacity:1}50%{transform:translate(calc(var(--x)*.5),-150px) scale(1.15) rotate(180deg)}100%{opacity:1;transform:translate(var(--x),var(--y)) scale(1) rotate(360deg)}}
+@keyframes bob2{50%{transform:translateY(-9px)}}
+#surprise{max-height:0;overflow:hidden;opacity:0;transition:max-height 1s,opacity 1s .4s}
+#surprise.in{max-height:460px;opacity:1}
+#surprise .inner{margin-top:22px;padding:22px 16px;border-radius:22px;border:1px dashed var(--gold);background:rgba(255,209,102,.08);font-family:'Noto Sans Gujarati',sans-serif}
+#surprise b{font-size:2.4rem;display:block;animation:bob 1.6s ease-in-out infinite}
+#surprise h3{margin:8px 0;color:var(--gold);font-size:1.4rem;font-weight:500}
+#surprise p{margin:0;font-weight:400;line-height:1.8}
+button{font:inherit;font-weight:500;border:0;border-radius:999px;padding:13px 26px;margin:6px 4px 0;cursor:pointer;color:#2a0a3d;background:linear-gradient(135deg,var(--gold),#ff9f6b);box-shadow:0 6px 24px rgba(255,150,100,.35)}
+button:active{transform:scale(.95)}
+button.alt{background:transparent;color:var(--gold);border:1px solid var(--gold);box-shadow:none;font-family:'Noto Sans Gujarati',sans-serif}
+footer{margin-top:26px;font-size:.82rem;color:var(--muted);font-family:'Noto Sans Gujarati',sans-serif}
+.sheet{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.sheet.on{opacity:1;visibility:visible;transition:opacity .3s}
+.sh-in{width:100%;background:#1c1c1e;border-radius:24px 24px 0 0;padding:14px 16px calc(20px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.9,.3,1)}
+.sheet.on .sh-in{transform:none}
+.grab{display:block;width:44px;height:5px;border-radius:3px;background:#555;margin:0 auto 14px}
+.sh-t{font-size:1rem;margin-bottom:18px;color:var(--text);font-family:'Noto Sans Gujarati',sans-serif}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 6px;margin-bottom:14px}
+.ap{display:flex;flex-direction:column;align-items:center;gap:7px;font:inherit;font-size:.75rem;color:var(--text);text-decoration:none;background:none;border:0;box-shadow:none;padding:0;margin:0;border-radius:0;cursor:pointer;font-family:'Noto Sans Gujarati',sans-serif}
+.ap span{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;color:#fff}
+.ap em{font-style:normal}
+/* Handwritten credits page */
+#credits{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;background:#fbf3e1 repeating-linear-gradient(transparent 0 41px,rgba(80,120,190,.28) 41px 43px);transform:translateY(100%);visibility:hidden;transition:transform 1s cubic-bezier(.7,0,.2,1),visibility 0s 1s}
+#credits.on{transform:none;visibility:visible;transition:transform 1s cubic-bezier(.7,0,.2,1),visibility 0s}
+#credits::before{content:"";position:absolute;top:0;bottom:0;left:clamp(26px,9vw,60px);width:2px;background:rgba(220,70,70,.45)}
+.paper{text-align:center;position:relative;transform:rotate(-3deg)}
+.mb{font-family:'Caveat',cursive;font-size:2.2rem;color:#6b6b6b;opacity:0}
+#credits.on .mb{animation:fadein .8s .3s forwards}
+.hw{font-family:'Caveat',cursive;font-weight:700;color:#1f3b9c;display:block;clip-path:inset(-20% 100% -20% 0)}
+.big{font-size:clamp(5rem,30vw,10rem);line-height:.95}
+.sm{font-size:2.3rem;margin-top:12px;color:#c0392b}
+#credits.on .hw{animation:write 1.3s var(--d) cubic-bezier(.5,0,.3,1) forwards}
+@keyframes write{to{clip-path:inset(-20% 0 -20% 0)}}
+.swoosh{width:min(70vw,300px);height:30px;display:block;margin:6px auto 0;fill:none;stroke:#c0392b;stroke-width:3;stroke-linecap:round}
+.swoosh path{stroke-dasharray:1;stroke-dashoffset:1}
+#credits.on .swoosh path{animation:draw .9s 3.5s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+#back{margin-top:30px;opacity:0;color:#1f3b9c;border-color:#1f3b9c}
+#credits.on #back{animation:fadein 1s 5.6s forwards}
+@keyframes fadein{to{opacity:1}}
+</style>
+</head>
+<body class="lock">
+<canvas id="c"></canvas>
+<button id="snd" aria-label="sound">🔊</button>
+
+<div id="gate">
+  <div class="door l"></div><div class="door r"></div>
+  <div id="gtitle"><h1>Happy<br>New Year</h1><p>❤️✨🎆</p><small>Tap to open 🔊</small></div>
+</div>
+
+<main>
+  <div class="tag">Happy New Year 2027</div>
+  <h2>Happy New Year!</h2>
+
+  <div class="card">
+    <p class="first line">Happyyy New Yearrr!! 🥂✨</p>
+    <p class="line">Hope this year brings you endless happiness, success, peace and unforgettable memories. May all your dreams come true and may you achieve everything you’ve been wishing for. Leave all the negativity behind and start fresh with positive vibes.</p>
+    <p class="line">Keep smiling, keep growing and never stop being the amazing person you are.</p>
+    <p class="line">I hope life surprises you with the best things, beautiful moments and countless reasons to smile. Stay happy, stay blessed and keep shining always. More memories, more adventures and more W’s ahead!! 🫶🏻❤️</p>
+    <p class="last line">Have the best year everrr!! 🎀</p>
+  </div>
+
+  <div class="gift">
+    <div id="box"><div class="base"></div>
+      <div class="kk" style="--x:-140px;--y:40px;--d:0s"><u><i></i></u></div>
+      <div class="kk" style="--x:140px;--y:50px;--d:.1s"><u><i></i></u></div>
+      <div class="kk" style="--x:-90px;--y:100px;--d:.2s"><u><i></i></u></div>
+      <div class="kk" style="--x:95px;--y:105px;--d:.15s"><u><i></i></u></div>
+      <div class="kk" style="--x:-115px;--y:-15px;--d:.25s"><u><i></i></u></div>
+      <div class="kk" style="--x:120px;--y:-10px;--d:.3s"><u><i></i></u></div>
+      <div class="lid"></div></div>
+    <small id="hint">A gift for you 🎁 — tap to open</small>
+    <div id="surprise"><div class="inner">
+      <b>🎁✨</b>
+      <h3>Your gift: Kaju Katli 😋</h3>
+      <p>Here’s your Kaju Katli! A whole year of sweetness, happiness and lots of love 😊❤️</p>
+    </div></div>
+  </div>
+
+  <button class="alt" id="share">Share 📤</button>
+  <button class="alt" id="boom">Fireworks 🎇</button>
+  <footer>Tap anywhere for fireworks 🎆</footer>
+</main>
+
+<div class="sheet" id="sheet"><div class="sh-in">
+  <i class="grab"></i><div class="sh-t">Share</div>
+  <div class="apps">
+    <a class="ap" id="a-wa" target="_blank" rel="noopener"><span style="background:#25D366">💬</span><em>WhatsApp</em></a>
+    <a class="ap" id="a-tg" target="_blank" rel="noopener"><span style="background:#2AABEE">✈️</span><em>Telegram</em></a>
+    <a class="ap" id="a-fb" target="_blank" rel="noopener"><span style="background:#1877F2">f</span><em>Facebook</em></a>
+    <a class="ap" id="a-gm" target="_blank" rel="noopener"><span style="background:#EA4335">✉️</span><em>Gmail</em></a>
+    <a class="ap" id="a-sms" target="_blank" rel="noopener"><span style="background:#34A853">📱</span><em>Messages</em></a>
+    <button class="ap" id="cp"><span style="background:#5f6368">🔗</span><em id="cplab">Copy link</em></button>
+    <button class="ap" id="more"><span style="background:#3c4043">⋯</span><em>More</em></button>
+  </div>
+  <button class="alt" id="shclose">Close</button>
+</div></div>
+
+<div id="credits"><div class="paper">
+  <div class="mb">Made by</div>
+  <span class="hw big" style="--d:.9s">Het M</span>
+  <span class="hw big" style="--d:2.2s">Trivedi</span>
+  <svg class="swoosh" viewBox="0 0 300 30"><path pathLength="1" d="M5 20 C60 4,120 28,180 12 S270 6,295 16"/></svg>
+  <span class="hw sm" style="--d:4.5s">Happy New Year ❤️✨</span>
+  <button class="alt" id="back">⬅ Back</button>
+</div></div>
+
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d');let W,H,P=[];
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight}size();addEventListener('resize',size);
+
+/* ---------- SOUND (Web Audio, no files) ---------- */
+let AC=null,unlocked=false,muted=false,mTimer=null;
+function ac(){if(!unlocked)return null;if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return null}}
+  if(AC.state==='suspended')AC.resume();return AC}
+function noise(d,fq,v,type){const a=ac();if(!a||muted)return;const b=a.createBuffer(1,a.sampleRate*d,a.sampleRate),x=b.getChannelData(0);
+  for(let i=0;i<x.length;i++)x[i]=(Math.random()*2-1)*(1-i/x.length);
+  const s=a.createBufferSource();s.buffer=b;const f=a.createBiquadFilter();f.type=type||'lowpass';f.frequency.value=fq;
+  const g=a.createGain();g.gain.value=v;s.connect(f);f.connect(g);g.connect(a.destination);s.start()}
+function tone(fr,t0,d,v,type){const a=ac();if(!a||muted)return;const o=a.createOscillator(),g=a.createGain(),t=a.currentTime+t0;
+  o.type=type||'sine';o.frequency.value=fr;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);
+  g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.05)}
+function boom(v){noise(.8,350+Math.random()*300,.7*v);tone(70,0,.45,.35*v)}
+function whoosh(){noise(1.8,700,.35);tone(55,0,1.8,.2)}
+function chime(a){a.forEach((f,i)=>tone(f,i*.14,.9,.14,'triangle'))}
+const SC=[523.25,587.33,659.25,783.99,880],PAT=[0,2,4,2,3,1,2,0,2,4,3,2,1,0,1,2];let mi=0;
+function startMusic(){if(mTimer||!unlocked||muted)return;
+  mTimer=setInterval(()=>{const n=PAT[mi++%PAT.length];tone(SC[n],0,.7,.05,'triangle');if(mi%4===1)tone(SC[n]/4,0,1.2,.06)},520)}
+function stopMusic(){clearInterval(mTimer);mTimer=null}
+addEventListener('pointerdown',()=>{if(!unlocked){unlocked=true;ac()}if(opened&&!muted)startMusic()});
+const sb=document.getElementById('snd');
+sb.addEventListener('pointerdown',e=>e.stopPropagation());
+sb.onclick=e=>{e.stopPropagation();muted=!muted;sb.textContent=muted?'🔇':'🔊';muted?stopMusic():(unlocked&&opened&&startMusic())};
+
+/* ---------- FIREWORKS ---------- */
+function burst(x,y,n){n=n||70;const h=Math.random()*360;boom(.5);
+  for(let i=0;i<n;i++){const a=Math.PI*2*i/n,s=1.5+Math.random()*4;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:1,h:h+Math.random()*40})}}
+function confetti(x,y){for(let i=0;i<90;i++){const a=-Math.PI/2+(Math.random()-.5)*2.4,s=3+Math.random()*7;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:1.4,h:Math.random()*360})}}
+function loop(){cx.globalCompositeOperation='destination-out';cx.fillStyle='rgba(0,0,0,.18)';cx.fillRect(0,0,W,H);
+  cx.globalCompositeOperation='lighter';P=P.filter(p=>p.l>0);
+  for(const p of P){p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.vx*=.985;p.l-=.011;cx.fillStyle='hsla('+p.h+',100%,60%,'+Math.min(p.l,1)+')';cx.beginPath();cx.arc(p.x,p.y,2.2,0,7);cx.fill()}
+  requestAnimationFrame(loop)}loop();
+function rnd(){burst(Math.random()*W,Math.random()*H*.55+30)}
+function multi(k){for(let i=0;i<k;i++)setTimeout(rnd,i*180)}
+
+/* ---------- GATE ---------- */
+const gate=document.getElementById('gate');let opened=false;
+function openGate(){if(opened)return;opened=true;gate.classList.add('open');whoosh();
+  setTimeout(()=>multi(5),500);setTimeout(()=>chime([523.25,659.25,783.99,1046.5]),900);
+  setTimeout(()=>{gate.classList.add('gone');document.body.classList.remove('lock');startMusic()},2000);
+  document.body.classList.add('show');
+  document.querySelectorAll('.line').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),1800+i*1100));
+  setInterval(rnd,2400)}
+gate.addEventListener('click',openGate);
+setTimeout(openGate,3800);setTimeout(()=>multi(3),600);
+
+/* ---------- GIFT ---------- */
+const box=document.getElementById('box');
+box.addEventListener('click',()=>{if(box.classList.contains('opened'))return;box.classList.add('opened');
+  const r=box.getBoundingClientRect();confetti(r.left+r.width/2,r.top+30);
+  tone(500,0,.2,.2,'triangle');tone(900,.1,.3,.15,'triangle');noise(.5,4000,.3,'highpass');
+  setTimeout(()=>multi(4),300);setTimeout(()=>chime([784,988,1175,1568]),500);
+  document.getElementById('surprise').classList.add('in');
+  document.getElementById('hint').textContent='Surprise! 🎉';
+  setTimeout(()=>document.getElementById('surprise').scrollIntoView({behavior:'smooth',block:'center'}),400);
+  setTimeout(()=>{location.hash='madeby'},8000)});
+
+/* ---------- CREDITS (auto after gift) ---------- */
+const cr=document.getElementById('credits');
+function setCr(on){cr.classList.toggle('on',on);if(on)setTimeout(()=>chime([523.25,659.25,783.99,1046.5,1318.5]),700)}
+document.getElementById('back').onclick=()=>{location.hash==='#madeby'?history.back():setCr(false)};
+addEventListener('hashchange',()=>setCr(location.hash==='#madeby'));
+
+addEventListener('pointerdown',e=>{if(opened&&!e.target.closest('button,a,#box,#credits,#sheet'))burst(e.clientX,e.clientY)});
+document.getElementById('boom').onclick=()=>multi(7);
+const SHARE_URL='https://hett17921-rgb.github.io/Happy-New-year-/bestu-varas.html';
+const STXT='Happyyy New Yearrr!! 🥂✨ I made a little surprise for you 🎁 Open it!';
+const sheet=document.getElementById('sheet');
+const full=encodeURIComponent(STXT+' '+SHARE_URL),eu=encodeURIComponent(SHARE_URL);
+document.getElementById('a-wa').href='https://wa.me/?text='+full;
+document.getElementById('a-tg').href='https://t.me/share/url?url='+eu+'&text='+encodeURIComponent(STXT);
+document.getElementById('a-fb').href='https://www.facebook.com/sharer/sharer.php?u='+eu;
+document.getElementById('a-gm').href='mailto:?subject='+encodeURIComponent('Happy New Year ❤️✨')+'&body='+full;
+document.getElementById('a-sms').href='sms:?body='+full;
+async function nativeShare(){try{await navigator.share({title:'Happy New Year ❤️✨',text:STXT,url:SHARE_URL});return true}catch(e){return !!e&&e.name==='AbortError'}}
+async function shareNow(){if(navigator.share&&await nativeShare())return;sheet.classList.add('on')}
+async function copyLink(){const l=document.getElementById('cplab');try{await navigator.clipboard.writeText(STXT+' '+SHARE_URL);l.textContent='Copied ✓'}catch(e){l.textContent='Copy failed'}}
+document.getElementById('share').onclick=shareNow;
+document.getElementById('cp').onclick=copyLink;
+document.getElementById('more').onclick=async()=>{if(navigator.share){await nativeShare()}else{copyLink()}};
+document.getElementById('shclose').onclick=()=>sheet.classList.remove('on');
+sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.classList.remove('on')});
+</script>
+</body>
+</html>
